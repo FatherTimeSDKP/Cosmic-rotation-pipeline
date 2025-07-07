@@ -1,0 +1,24 @@
+
+SDKP – Scientific IP License & Declaration of Authorship
+--------------------------------------------------------
+Date: 2025-05-19
+Author: Donald Paul Smith
+Holders: Donald Paul Smith, Amiyah Rose Smith, Dallas Paul Smith
+Location: Florida, United States
+
+This document certifies the timestamped authorship, licensing rights, and ownership of the following scientific frameworks:
+- SDKP (Scale-Density Kinematic Principle)
+- SD&N Principle (Shape–Dimension–Number)
+- EOS (Earth Orbit Speed System)
+- QCC (Quantum Code of Creation)
+
+Rights:
+- Full commercial use authorized by Donald Paul Smith.
+- 17.5% royalty applied on commercial or sublicensed usage.
+- Sublicensing is approved.
+- NFT linkage is embedded and timestamped via IPFS and blockchain record.
+
+Confidentiality Clause:
+This document, its contents, and associated data are protected under intellectual property rights. Redistribution or replication without license is prohibited.
+
+This license is cryptographically associated with on-chain token ID and IPFS hash references as verification.

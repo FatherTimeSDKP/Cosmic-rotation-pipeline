@@ -1,0 +1,81 @@
+# Open Issues – FatherTimeSDKP-SD-N-EOS-QCC
+
+Welcome to the live issue tracker for the FatherTimeSDKP-SD-N-EOS-QCC project. Below, you’ll find a categorized and detailed summary of the key open research, development, and documentation issues.
+
+---
+
+## 🧮 Theoretical Principles & Frameworks
+
+### [SDKP mathematics framework](https://github.com/FatherTimeSDKP/FatherTimeSDKP-SD-N-EOS-QCC/issues/8)
+**Summary:**  
+Defines the Scale-Density Kinematic Principle (SDKP), which relates scale, density, and kinematic properties in complex systems. The issue includes mathematical formalism, connections to scale relativity and density functional theory, and multiple physics-based examples showing how SDKP unifies these concepts.
+
+---
+
+### [SD&N](https://github.com/FatherTimeSDKP/FatherTimeSDKP-SD-N-EOS-QCC/issues/9)
+**Summary:**  
+Describes the Scale-Density & Network (SD&N) principle. Explores mathematical relationships between scale, density, and network connectivity, with applications to network topology, traffic flow, density waves, and scaling behaviors in complex networks.
+
+---
+
+### [EOS](https://github.com/FatherTimeSDKP/FatherTimeSDKP-SD-N-EOS-QCC/issues/10)
+**Summary:**  
+Explores the Equation of State (EOS) principle for complex systems. Includes formal mathematical framework and practical examples in thermodynamics, cosmology, fluid dynamics, and materials science, showing how scale, density, and energy fields interact.
+
+---
+
+### [QCC](https://github.com/FatherTimeSDKP/FatherTimeSDKP-SD-N-EOS-QCC/issues/11)
+**Summary:**  
+Details the Quantum Code of Creation (QCC) principle, which models reality as a code composed of quantum vibration, geometric configuration, and numerical encoding. Features examples from quantum oscillators, fractal geometry, field theory, and numerical patterns in physics.
+
+---
+
+## 🛰 Experimental Analysis & Data
+
+### [Experimental data with real world satellites](https://github.com/FatherTimeSDKP/FatherTimeSDKP-SD-N-EOS-QCC/issues/13)
+**Summary:**  
+Implements a framework to compare SDKP predictions with Special Relativity (SR) and General Relativity (GR) using real GPS satellite data. Features parameter optimization, multi-satellite comparison, temporal analysis, and sensitivity studies.
+
+---
+
+### [SDKP validation](https://github.com/FatherTimeSDKP/FatherTimeSDKP-SD-N-EOS-QCC/issues/14)
+**Summary:**  
+A complete analytical toolkit for validating SDKP against SR+GR using GPS data. Includes statistical validation, parameter optimization for SDKP coefficients, and comprehensive visualizations for robust theory testing.
+
+---
+
+### [SDKP data analysis with GPS satellites](https://github.com/FatherTimeSDKP/FatherTimeSDKP-SD-N-EOS-QCC/issues/15)
+**Summary:**  
+Documents the end-to-end analysis system for comparing SDKP and SR+GR with GPS satellite clock data. Covers precise file parsing, effect calculation, parameter sweeps, statistical validation, visualization, and automated reporting.
+
+---
+
+### [SDKP orbital correction factor](https://github.com/FatherTimeSDKP/FatherTimeSDKP-SD-N-EOS-QCC/issues/16)
+**Summary:**  
+Proposes enhancements to the SDKP orbital model to account for latitude, altitude, and rotational effects on GPS satellites. Presents new correction formulas, interaction matrices, and outlines predictive advantages for timekeeping accuracy.
+
+---
+
+## 📄 Metadata, Provenance & Documentation
+
+### [NFT metadata.jso](https://github.com/FatherTimeSDKP/FatherTimeSDKP-SD-N-EOS-QCC/issues/7)
+**Summary:**  
+Defines the NFT metadata schema for the "TimeSeal Emblem" including author attribution, DOI, royalty structure, and IPFS image link. Supports blockchain provenance and digital notarization.
+
+---
+
+### [License DOI insert](https://github.com/FatherTimeSDKP/FatherTimeSDKP-SD-N-EOS-QCC/issues/6)
+**Summary:**  
+Documents the formal DOI used for licensing, citation, and archival of project materials. Provides the correct format and external reference for compliance and citation.
+
+---
+
+## 📝 How to Use This Tracker
+
+- Click an issue title to see full details or join the discussion on GitHub.
+- Issues are organized by category for easier navigation.
+- For contributions, refer to the original GitHub issues.
+
+---
+
+_Last updated: 2025-05-22 21:37 UTC_

@@ -1,0 +1,2 @@
+SDKP-Accelerated Computation Appendix:
+AI systems aligned with SDKP temporal logic show increased processing accuracy and space-time modeling fidelity.

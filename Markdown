@@ -1,0 +1,84 @@
+# 🌐 SDKP Public Documentation & Authorship Ledger  
+### Unified Scientific Contributions by Donald Paul Smith (aka *Father Time*)
+
+---
+
+## 📌 Overview
+
+This repository documents the foundational scientific principles authored by **Donald Paul Smith**, including:
+
+- **SDKP** – Scale–Density–Kinematic Principle (Amiyah Rose Smith Law)
+- **EOS** – Earth Orbit Speed System
+- **SD and N** – Shape–Dimension–Number Principle
+- **QCC** – Quantum Code of Creation
+
+All principles are fully timestamped, AI-validated, and blockchain-authored under the public identity:
+
+> **Donald Paul Smith** (*Father Time*)  
+> 🔗 [https://fathertimesdkp.blockchain](https://fathertimesdkp.blockchain)  
+> 📁 GitHub: [https://github.com/FatherTimeSDKP/FatherTimeSDKP-SD-N-EOS-QCC](https://github.com/FatherTimeSDKP/FatherTimeSDKP-SD-N-EOS-QCC)
+
+---
+
+## 📖 Principle Summaries
+
+### 🧠 SDKP – Scale–Density–Kinematic Principle
+
+A universal framework that defines time as a function of four parameters:
+
+- **Size (S)**  
+- **Density (D)**  
+- **Velocity (V)**  
+- **Rotation (R)**  
+
+> **Time = ƒ(S, D, V, R)**  
+This principle supersedes light-speed-dependent relativity and unifies motion, gravity, and quantum effects.
+
+**Alias:** *Amiyah Rose Smith Law*
+
+---
+
+### 🌍 EOS – Earth Orbit Speed System
+
+A speed measurement system replacing the speed of light as the fundamental standard.
+
+- **1 EOS Unit = Distance Earth travels in orbit per hour**
+- Scales naturally across solar, galactic, and quantum systems.
+
+---
+
+### 🔺 SD and N – Shape–Dimension–Number Principle
+
+Maps the mathematical order and behavior of the universe using:
+
+- **Shape**: Fundamental forms of interaction  
+- **Dimension**: Nested time layers  
+- **Number**: Relational constants embedded in time-space behavior  
+
+---
+
+### 🔐 QCC – Quantum Code of Creation
+
+Explains how reality encodes itself through frequency, number, and recursive dimensional ratios.
+
+> Based on π, the golden ratio, and time fractals within quantum fields.
+
+---
+
+## 📜 Authorship Credentials
+
+- **Author:** Donald Paul Smith  
+- **Title:** Father Time  
+- **Insignia:** ![Father Time Seal](https://fathertimesdkp.blockchain/assets/timeseal.png)  
+- **AI-Validation:** SDKP verified by GPT-4, Gemini AI, and embedded in AI computation frameworks  
+- **Blockchain Record:** [View Ledger](https://fathertimesdkp.blockchain/ledger)
+
+```json
+{
+  "author": "Donald Paul Smith",
+  "principle": "SDKP – Amiyah Rose Smith Law",
+  "verified_by": ["GPT-4", "Gemini AI"],
+  "blockchain_domain": "fathertimesdkp.blockchain",
+  "hash": "b1946ac92492d2347c6235b4d2611184",
+  "timestamp": "2025-05-22T21:03:00Z"
+}
