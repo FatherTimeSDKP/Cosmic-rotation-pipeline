@@ -1,0 +1,586 @@
+Tags for OSF pre-print on cosmic rotation pipeline  import jax
+import jax.numpy as jnp
+from jax import grad, jit, vmap
+from jax.numpy.fft import fftn, fftfreq
+import numpyro
+import numpyro.distributions as dist
+from numpyro.infer import MCMC, NUTS
+import numpy as np
+from dataclasses import dataclass
+from typing import Tuple, Optional, List
+import matplotlib.pyplot as plt
+
+# ========== 1. SDKP Field Implementation ==========
+
+class SDKPField:
+“”“Size-Density-Kinetic-Potential field with enhanced physics”””
+
+```
+def __init__(self, size, density, velocity, position=None):
+    self.size = size
+    self.density = density
+    self.velocity = velocity
+    self.position = position if position is not None else jnp.zeros(3)
+    
+    # Derived SDKP quantities
+    self.mass = self.density * self.size**3
+    self.kinetic_energy = 0.5 * self.mass * jnp.linalg.norm(self.velocity)**2
+    self.potential_energy = self.compute_potential()
+    self.sdkp_time = (self.size * self.density * jnp.linalg.norm(self.velocity))
+    self.sdkp_coupling = self.kinetic_energy / (self.potential_energy + 1e-10)
+    
+    # SDKP field tensor
+    self.sdkp_tensor = self.compute_sdkp_tensor()
+
+def compute_potential(self):
+    """Compute gravitational potential energy"""
+    G = 6.674e-11
+    r = jnp.linalg.norm(self.position)
+    return -G * self.mass / (r + 1e-10)  # Avoid division by zero
+
+def compute_sdkp_tensor(self):
+    """Compute SDKP tensor for field equations"""
+    return jnp.array([
+        self.size,
+        self.density,
+        self.kinetic_energy,
+        self.potential_energy
+    ])
+
+def sdkp_field_strength(self):
+    """Compute SDKP field strength metric"""
+    return jnp.sqrt(self.size**2 + self.density**2 + 
+                   self.kinetic_energy**2 + self.potential_energy**2)
+```
+
+# ========== 2. SD&N Identity Assignment ==========
+
+def assign_sdn_identity(galaxy_positions):
+“”“Assign SD&N numeric encodings to each galaxy based on geometry”””
+encoded_ids = []
+
+```
+for pos in galaxy_positions:
+    r = jnp.linalg.norm(pos)
+    theta = jnp.arctan2(pos[1], pos[0])
+    phi = jnp.arccos(pos[2] / (r + 1e-10))
+    
+    # Shape classifier (symbolic geometry)
+    shape_param = jnp.sin(3*theta) * jnp.cos(2*phi)
+    shape = jnp.sign(shape_param)  # -1, 0, 1 for different geometries
+    
+    # Dimension encoding (0-8 based on radial shells)
+    dimension = int(jnp.floor(r / 100) % 9)
+    
+    # Number encoding using cosmic constants
+    number = int((r * 7146 + theta * 8888 + phi * 1234) % 10)
+    
+    # SD&N composite identity
+    sdn_id = (shape, dimension, number)
+    encoded_ids.append(sdn_id)
+
+return jnp.array(encoded_ids)
+```
+
+@jit
+def compute_sdn_entanglement_matrix(sdn_ids):
+“”“Compute entanglement probabilities based on SD&N similarity”””
+n = len(sdn_ids)
+entanglement_matrix = jnp.zeros((n, n))
+
+```
+for i in range(n):
+    for j in range(i+1, n):
+        # Extract SD&N components
+        shape1, dim1, num1 = sdn_ids[i]
+        shape2, dim2, num2 = sdn_ids[j]
+        
+        # Similarity scoring
+        shape_sim = 1.0 if shape1 == shape2 else 0.3
+        dim_sim = 1.0 / (1.0 + jnp.abs(dim1 - dim2))
+        num_sim = 1.0 / (1.0 + jnp.abs(num1 - num2))
+        
+        # VEI (Vibrational Entanglement Index)
+        vei = shape_sim * dim_sim * num_sim
+        entanglement_matrix = entanglement_matrix.at[i,j].set(vei)
+        entanglement_matrix = entanglement_matrix.at[j,i].set(vei)
+
+return entanglement_matrix
+```
+
+# ========== 3. QCC Entropy Compression Model ==========
+
+class QCCEntropyField:
+“”“Quantum Computerization Consciousness entropy field model”””
+
+```
+def __init__(self, s0=1e90, decay_rate=1e-10, collapse_threshold=1e80):
+    self.s0 = s0  # Initial entropy
+    self.decay_rate = decay_rate
+    self.collapse_threshold = collapse_threshold
+    self.consciousness_coupling = 1e-40  # Planck-scale coupling
+
+@jit
+def entropy_field(self, t, position=None):
+    """Entropy field evolution with spatial variation"""
+    if position is not None:
+        r = jnp.linalg.norm(position)
+        # Spatial modulation (entropy wells near massive objects)
+        spatial_factor = 1.0 / (1.0 + r / 1e26)  # Hubble scale
+    else:
+        spatial_factor = 1.0
+    
+    # Temporal decay
+    temporal_factor = jnp.exp(-self.decay_rate * t)
+    
+    # QCC oscillations
+    qcc_oscillation = 1.0 + 0.01 * jnp.sin(2 * jnp.pi * t / 1e17)  # Planck time scale
+    
+    return self.s0 * temporal_factor * spatial_factor * qcc_oscillation
+
+@jit
+def consciousness_probability(self, entropy_local, sdkp_coupling):
+    """Probability of consciousness emergence from entropy-SDKP coupling"""
+    # Consciousness emerges at critical entropy-complexity intersection
+    critical_entropy = self.collapse_threshold
+    complexity_factor = sdkp_coupling
+    
+    # Sigmoid activation for consciousness probability
+    arg = (entropy_local - critical_entropy) * complexity_factor * self.consciousness_coupling
+    return 1.0 / (1.0 + jnp.exp(-arg))
+
+@jit
+def entropy_collapse_rate(self, entropy_field_val, consciousness_prob):
+    """Rate of entropy collapse due to consciousness observation"""
+    # Consciousness collapses entropy field
+    collapse_rate = consciousness_prob * self.decay_rate * 10
+    return entropy_field_val * jnp.exp(-collapse_rate)
+```
+
+# ========== 4. EOS Dual-Mode Integration ==========
+
+def get_speed(mode=‘c’):
+“”“Get speed constant based on mode”””
+if mode == ‘c’:
+return 299792458  # m/s (speed of light)
+elif mode == ‘EOS’:
+return 29780  # m/s (Earth orbital speed)
+else:
+raise ValueError(f”Unknown mode: {mode}”)
+
+def get_dual_mode_physics(curl_max, mode=‘c’):
+“”“Compute physics quantities in dual-mode framework”””
+speed = get_speed(mode)
+omega_max = curl_max / speed
+
+```
+# Mode-specific corrections
+if mode == 'EOS':
+    # EOS corrections for Earth-centric physics
+    correction_factor = 1.0 + 1e-8 * jnp.sin(2 * jnp.pi * 365.25)  # Annual modulation
+    omega_max *= correction_factor
+
+return omega_max, speed
+```
+
+# ========== 5. Enhanced Kerr-EC Model ==========
+
+class EnhancedKerrECModel:
+“”“Enhanced Kerr black hole with Einstein-Cartan torsion and QCC corrections”””
+
+```
+def __init__(self, M, a, qcc_entropy_field, G=6.674e-11):
+    self.M = M
+    self.a = a  # specific angular momentum
+    self.G = G
+    self.qcc_entropy = qcc_entropy_field
+
+def effective_density_with_torsion_and_entropy(self, rho, spin_density, t, position=None):
+    """Enhanced Poplawski's correction with QCC entropy compression"""
+    kappa = 8 * jnp.pi * self.G / (get_speed('c')**4)
+    
+    # Standard EC correction
+    ec_correction = 0.5 * kappa * spin_density**2
+    
+    # QCC entropy correction
+    entropy_factor = self.qcc_entropy.entropy_field(t, position)
+    entropy_compression = entropy_factor / self.qcc_entropy.s0
+    
+    # Combined effective density
+    rho_eff = rho - ec_correction + rho * entropy_compression
+    
+    return rho_eff
+
+def compute_enhanced_bounce_time(self, spin_density, rho_initial, t_range=None):
+    """Compute bounce time with QCC entropy compression"""
+    if t_range is None:
+        t_range = jnp.linspace(0, 1e18, 1000)  # seconds
+    
+    def integrand(t):
+        a_val = (t / 1e18)**(2/3)  # approximate scale factor evolution
+        
+        # QCC entropy factor
+        entropy_factor = self.qcc_entropy.entropy_field(t)
+        entropy_compression = entropy_factor / self.qcc_entropy.s0
+        
+        # Effective density with all corrections
+        rho_eff = self.effective_density_with_torsion_and_entropy(
+            rho_initial * (1/a_val)**3, spin_density, t
+        )
+        
+        # Enhanced Hubble parameter
+        H_eff = jnp.sqrt(jnp.maximum(8*jnp.pi*self.G*rho_eff/3, 1e-20))
+        
+        return 1 / (a_val * H_eff)
+    
+    # Numerical integration
+    integrand_vals = vmap(integrand)(t_range)
+    bounce_time = jnp.trapz(integrand_vals, t_range)
+    
+    return bounce_time
+
+def modified_inner_horizon_with_entropy(self, spin_density, t=0):
+    """Compute modified r_- with entropy smoothing"""
+    # Standard Kerr inner horizon
+    c = get_speed('c')
+    Delta = self.M**2 - self.a**2
+    r_minus_std = self.M - jnp.sqrt(jnp.maximum(Delta, 0))
+    
+    # Torsion correction
+    torsion_correction = spin_density * self.G / (c**4)
+    
+    # QCC entropy correction
+    entropy_factor = self.qcc_entropy.entropy_field(t)
+    entropy_correction = entropy_factor / self.qcc_entropy.s0 * 1e-10
+    
+    r_minus_modified = r_minus_std + torsion_correction + entropy_correction
+    
+    return r_minus_modified
+```
+
+# ========== 6. Enhanced Velocity Field Reconstruction ==========
+
+def reconstruct_sdkp_velocity_field(delta_T_map, galaxy_positions, galaxy_masses=None):
+“”“Reconstruct velocity field with explicit SDKP field handling”””
+
+```
+# Default masses if not provided
+if galaxy_masses is None:
+    galaxy_masses = jnp.ones(len(galaxy_positions)) * 1e41  # kg
+
+# Estimate sizes and densities
+galaxy_sizes = (galaxy_masses / 1e30)**(1/3) * 1e3  # km, rough scaling
+galaxy_densities = galaxy_masses / (4/3 * jnp.pi * galaxy_sizes**3)
+
+# Velocity reconstruction from temperature gradients
+grad_T = jnp.gradient(delta_T_map)
+
+# Map temperature gradients to galaxy positions (simplified)
+velocities = []
+for i, pos in enumerate(galaxy_positions):
+    # Convert position to grid indices (simplified)
+    grid_indices = ((pos - jnp.min(galaxy_positions)) / 
+                   (jnp.max(galaxy_positions) - jnp.min(galaxy_positions)) * 
+                   (jnp.array(delta_T_map.shape) - 1)).astype(int)
+    
+    # Clamp indices to valid range
+    grid_indices = jnp.clip(grid_indices, 0, jnp.array(delta_T_map.shape) - 1)
+    
+    # Extract velocity from temperature gradient
+    vel = jnp.array([
+        grad_T[0][tuple(grid_indices)] * 1e5,  # km/s
+        grad_T[1][tuple(grid_indices)] * 1e5,
+        grad_T[2][tuple(grid_indices)] * 1e5
+    ])
+    velocities.append(vel)
+
+velocities = jnp.array(velocities)
+
+# Create SDKP field objects
+sdkp_fields = []
+for i in range(len(galaxy_positions)):
+    field = SDKPField(
+        size=galaxy_sizes[i],
+        density=galaxy_densities[i],
+        velocity=velocities[i],
+        position=galaxy_positions[i]
+    )
+    sdkp_fields.append(field)
+
+return sdkp_fields
+```
+
+# ========== 7. Enhanced FRW Model with All Corrections ==========
+
+def enhanced_frw_rotation_model(obs_data, mode=‘c’):
+“”“Enhanced FRW model with SDKP, QCC, and EOS corrections”””
+
+```
+# Standard cosmological parameters
+omega_m = numpyro.sample("omega_m", dist.Uniform(0.1, 0.5))
+omega_lambda = numpyro.sample("omega_lambda", dist.Uniform(0.5, 0.9))
+h = numpyro.sample("h", dist.Uniform(0.6, 0.8))
+
+# Enhanced rotation parameter
+omega_rot = numpyro.sample("omega_rot", dist.Uniform(0.0, 1e-12))
+
+# SDKP coupling parameter
+sdkp_coupling = numpyro.sample("sdkp_coupling", dist.Uniform(0.0, 1e-20))
+
+# QCC entropy compression parameter
+qcc_compression = numpyro.sample("qcc_compression", dist.Uniform(0.0, 1e-5))
+
+# Mode-dependent speed
+c_effective = get_speed(mode)
+
+# Enhanced Friedmann equation
+H0_squared = (8*jnp.pi*6.674e-11/3) * omega_m + omega_rot**2 + omega_lambda/3
+
+# SDKP correction
+H0_squared += sdkp_coupling * omega_m**2
+
+# QCC entropy correction
+H0_squared *= (1 + qcc_compression)
+
+# Mode correction
+if mode == 'EOS':
+    H0_squared *= (c_effective / get_speed('c'))**2
+
+H0_predicted = jnp.sqrt(H0_squared) * h * 100  # km/s/Mpc
+
+# Likelihood
+numpyro.sample("H0_obs", dist.Normal(H0_predicted, 1.0), obs=obs_data['H0'])
+
+# Constraint on total density
+omega_total = omega_m + omega_lambda + omega_rot + sdkp_coupling + qcc_compression
+numpyro.sample("omega_total", dist.Normal(omega_total, 0.01), obs=1.0)
+```
+
+def run_enhanced_frw_mcmc(obs_data, mode=‘c’, num_samples=2000, num_warmup=1000):
+“”“Run enhanced MCMC fit”””
+
+```
+def model(obs_data):
+    return enhanced_frw_rotation_model(obs_data, mode)
+
+nuts_kernel = NUTS(model)
+mcmc = MCMC(nuts_kernel, num_samples=num_samples, num_warmup=num_warmup)
+mcmc.run(jax.random.PRNGKey(42), obs_data)
+return mcmc.get_samples()
+```
+
+# ========== 8. Complete Enhanced Pipeline ==========
+
+class EnhancedCosmicRotationPipeline:
+“”“Complete pipeline with all enhancements”””
+
+```
+def __init__(self, obs_data, mode='c'):
+    self.obs_data = obs_data
+    self.mode = mode
+    self.sdkp_fields = None
+    self.sdn_ids = None
+    self.entanglement_matrix = None
+    self.qcc_entropy = QCCEntropyField()
+    self.enhanced_kerr_ec = None
+    self.omega_max = None
+    self.frw_results = None
+
+def run_enhanced_analysis(self, delta_T_map, galaxy_positions):
+    """Run complete enhanced analysis"""
+    
+    print(f"🌌 Starting Enhanced Analysis (Mode: {self.mode})")
+    print("=" * 60)
+    
+    # Step 1: SDKP Field Reconstruction
+    print("\n🔬 Step 1: SDKP Field Reconstruction")
+    self.sdkp_fields = reconstruct_sdkp_velocity_field(delta_T_map, galaxy_positions)
+    
+    # Extract velocity field
+    v_field = jnp.stack([field.velocity for field in self.sdkp_fields])
+    mean_v = jnp.mean(jnp.linalg.norm(v_field, axis=1))
+    print(f"   Average velocity: {mean_v:.2e} km/s")
+    print(f"   SDKP fields created: {len(self.sdkp_fields)}")
+    
+    # Step 2: SD&N Identity Assignment
+    print("\n🔢 Step 2: SD&N Identity Assignment")
+    self.sdn_ids = assign_sdn_identity(galaxy_positions)
+    self.entanglement_matrix = compute_sdn_entanglement_matrix(self.sdn_ids)
+    
+    mean_entanglement = jnp.mean(self.entanglement_matrix)
+    print(f"   Galaxies encoded: {len(self.sdn_ids)}")
+    print(f"   Mean entanglement: {mean_entanglement:.3f}")
+    
+    # Step 3: Compute Curl and Rotation
+    print("\n🌀 Step 3: Curl and Rotation Analysis")
+    
+    # Create 3D velocity field for curl computation
+    grid_shape = delta_T_map.shape
+    v_field_3d = jnp.zeros(grid_shape + (3,))
+    
+    # Simple velocity field reconstruction
+    grad_T = jnp.gradient(delta_T_map)
+    v_field_3d = v_field_3d.at[..., 0].set(grad_T[0] * 1e5)
+    v_field_3d = v_field_3d.at[..., 1].set(grad_T[1] * 1e5)
+    v_field_3d = v_field_3d.at[..., 2].set(grad_T[2] * 1e5)
+    
+    # Compute curl
+    curl_field = self.compute_curl_field(v_field_3d)
+    curl_max = jnp.max(jnp.linalg.norm(curl_field, axis=-1))
+    
+    # Dual-mode rotation computation
+    self.omega_max, c_effective = get_dual_mode_physics(curl_max, self.mode)
+    
+    print(f"   Max curl: {curl_max:.2e}")
+    print(f"   Effective speed: {c_effective:.2e} m/s")
+    print(f"   Max rotation: {self.omega_max:.2e} rad/s")
+    
+    # Step 4: Enhanced FRW Fit
+    print("\n📊 Step 4: Enhanced FRW Fit")
+    self.frw_results = run_enhanced_frw_mcmc(self.obs_data, self.mode)
+    
+    omega_rot_mean = jnp.mean(self.frw_results['omega_rot'])
+    sdkp_coupling_mean = jnp.mean(self.frw_results['sdkp_coupling'])
+    qcc_compression_mean = jnp.mean(self.frw_results['qcc_compression'])
+    
+    print(f"   Rotation parameter: {omega_rot_mean:.2e}")
+    print(f"   SDKP coupling: {sdkp_coupling_mean:.2e}")
+    print(f"   QCC compression: {qcc_compression_mean:.2e}")
+    
+    # Step 5: Enhanced Kerr-EC Model
+    print("\n🕳️  Step 5: Enhanced Kerr-EC Model")
+    self.enhanced_kerr_ec = EnhancedKerrECModel(
+        M=1e30, a=0.5, qcc_entropy_field=self.qcc_entropy
+    )
+    
+    spin_density = omega_rot_mean * 1e20
+    bounce_time = self.enhanced_kerr_ec.compute_enhanced_bounce_time(
+        spin_density, rho_initial=1e15
+    )
+    
+    print(f"   Bounce time: {bounce_time:.2e} s")
+    print(f"   Spin density: {spin_density:.2e}")
+    
+    # Step 6: Final Assessment
+    print("\n✅ Step 6: Final Assessment")
+    universe_age = 13.8e9 * 365.25 * 24 * 3600  # seconds
+    consistency = abs(bounce_time - universe_age) / universe_age < 0.2
+    
+    print(f"   Universe age: {universe_age:.2e} s")
+    print(f"   Bounce/Age ratio: {bounce_time/universe_age:.2f}")
+    print(f"   Timing consistent: {consistency}")
+    
+    # Final verdict
+    print("\n🎯 ENHANCED ASSESSMENT")
+    print("=" * 60)
+    
+    if consistency and self.omega_max < 1e-9:
+        print("✅ ENHANCED RESULT: Universe shows enhanced signatures")
+        print("   consistent with rotating black hole interior")
+        print(f"   - Mode: {self.mode}")
+        print(f"   - Rotation: {self.omega_max:.2e} rad/s")
+        print(f"   - SDKP coupling: {sdkp_coupling_mean:.2e}")
+        print(f"   - QCC compression: {qcc_compression_mean:.2e}")
+    else:
+        print("❌ ENHANCED RESULT: Enhanced model shows inconsistencies")
+    
+    return {
+        'mode': self.mode,
+        'sdkp_fields': self.sdkp_fields,
+        'sdn_analysis': {
+            'ids': self.sdn_ids,
+            'entanglement_matrix': self.entanglement_matrix,
+            'mean_entanglement': mean_entanglement
+        },
+        'rotation_analysis': {
+            'omega_max': self.omega_max,
+            'curl_max': curl_max,
+            'effective_speed': c_effective
+        },
+        'frw_results': self.frw_results,
+        'kerr_ec_results': {
+            'bounce_time': bounce_time,
+            'spin_density': spin_density
+        },
+        'consistency': consistency
+    }
+
+def compute_curl_field(self, v_field):
+    """Compute curl of velocity field"""
+    # Simple finite difference curl computation
+    curl = jnp.zeros_like(v_field)
+    
+    # ∇ × v = (∂v_z/∂y - ∂v_y/∂z, ∂v_x/∂z - ∂v_z/∂x, ∂v_y/∂x - ∂v_x/∂y)
+    dvz_dy = jnp.gradient(v_field[..., 2], axis=1)
+    dvy_dz = jnp.gradient(v_field[..., 1], axis=2)
+    curl = curl.at[..., 0].set(dvz_dy - dvy_dz)
+    
+    dvx_dz = jnp.gradient(v_field[..., 0], axis=2)
+    dvz_dx = jnp.gradient(v_field[..., 2], axis=0)
+    curl = curl.at[..., 1].set(dvx_dz - dvz_dx)
+    
+    dvy_dx = jnp.gradient(v_field[..., 1], axis=0)
+    dvx_dy = jnp.gradient(v_field[..., 0], axis=1)
+    curl = curl.at[..., 2].set(dvy_dx - dvx_dy)
+    
+    return curl
+```
+
+# ========== 9. Example Usage ==========
+
+def create_enhanced_mock_data():
+“”“Create enhanced mock data for testing”””
+
+```
+# Mock CMB temperature map with more structure
+grid_size = (32, 32, 32)  # Smaller for faster computation
+x = jnp.linspace(-10, 10, grid_size[0])
+y = jnp.linspace(-10, 10, grid_size[1])
+z = jnp.linspace(-10, 10, grid_size[2])
+X, Y, Z = jnp.meshgrid(x, y, z)
+
+# Add some structure: rotating pattern
+delta_T_map = 1e-5 * (jnp.sin(X) * jnp.cos(Y) + 0.1 * jnp.sin(Z))
+
+# Mock galaxy positions
+n_galaxies = 500
+galaxy_positions = jnp.array(np.random.uniform(-1000, 1000, (n_galaxies, 3)))
+
+# Enhanced observational data
+obs_data = {
+    'H0': 70.0,  # km/s/Mpc
+    'omega_m': 0.3,
+    'omega_lambda': 0.7
+}
+
+return delta_T_map, galaxy_positions, obs_data
+```
+
+# ========== 10. Main Execution ==========
+
+if **name** == “**main**”:
+# Create test data
+delta_T_map, galaxy_positions, obs_data = create_enhanced_mock_data()
+
+```
+# Run analysis in both modes
+print("🔬 ENHANCED COSMIC ROTATION ANALYSIS")
+print("=" * 80)
+
+# Standard mode (speed of light)
+pipeline_c = EnhancedCosmicRotationPipeline(obs_data, mode='c')
+results_c = pipeline_c.run_enhanced_analysis(delta_T_map, galaxy_positions)
+
+print("\n" + "="*80)
+
+# EOS mode (Earth orbital speed)
+pipeline_eos = EnhancedCosmicRotationPipeline(obs_data, mode='EOS')
+results_eos = pipeline_eos.run_enhanced_analysis(delta_T_map, galaxy_positions)
+
+# Compare results
+print("\n🔍 MODE COMPARISON")
+print("=" * 80)
+print(f"Standard Mode (c):  ω_max = {results_c['rotation_analysis']['omega_max']:.2e}")
+print(f"EOS Mode:           ω_max = {results_eos['rotation_analysis']['omega_max']:.2e}")
+print(f"Ratio (EOS/c):      {results_eos['rotation_analysis']['omega_max']/results_c['rotation_analysis']['omega_max']:.2e}")
+```
