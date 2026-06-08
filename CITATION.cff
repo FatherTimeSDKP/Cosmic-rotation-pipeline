@@ -3,26 +3,80 @@ message: "If you use this work, please cite it as below."
 authors:
   - family-names: Smith
     given-names: Donald Paul
-title: "TimeSeal Framework: SDKP, EOS, SD&N, QCC"
+    orcid: "https://orcid.org/0009-0003-7925-1653"
+title: "Cosmic Rotation Pipeline: SDKP, EOS, SD&N, QCC"
 version: 1.0.0
 doi: 10.5281/zenodo.15399806
 date-released: 2025-05-20
+url: "https://github.com/FatherTimeSDKP/Cosmic-rotation-pipeline"
+repository-code: "https://github.com/FatherTimeSDKP/Cosmic-rotation-pipeline"
+license: "CC-BY-4.0"
+keywords:
+  - SDKP
+  - QCC
+  - SD&N
+  - EOS
+  - quantum entanglement
+  - cosmic rotation
+  - theoretical physics
+  - gravitational modeling
+abstract: >
+  The Cosmic Rotation Pipeline integrates the FatherTimeSDKP Framework
+  (SDKP, SD&N, QCC, EOS) for cosmological modeling with enhanced rotation
+  dynamics and Kerr-EC bounce analysis. This framework is used for
+  entanglement prediction, gravitational resonance, dark matter behavior,
+  and NP-complete collapse simulations. Released publicly under an
+  open-source license for scientific advancement.
+
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.15399806
+    description: Cosmic Rotation Pipeline Primary Archive
+
 references:
-  - type: dataset
-    title: "Zenodo Research Record 1"
-    url: "https://zenodo.org/records/19701580"
+  - type: article
+    title: SDKP-Based Quantum Framework and Simulation Dataset
+    doi: "10.17605/OSF.IO/SYMHB"
     authors:
       - family-names: Smith
         given-names: Donald Paul
-  - type: dataset
-    title: "Zenodo Research Record 2"
-    url: "https://zenodo.org/records/19478891"
+        orcid: "https://orcid.org/0009-0003-7925-1653"
+  - type: article
+    title: SDKP Usage — Quantum Entanglement Predictions
+    doi: "10.17605/OSF.IO/CQ3DV"
     authors:
       - family-names: Smith
         given-names: Donald Paul
+        orcid: "https://orcid.org/0009-0003-7925-1653"
   - type: dataset
-    title: "Zenodo Research Record 3"
-    url: "https://zenodo.org/records/18448356"
+    title: Zenodo Research Record 1
+    url: https://zenodo.org/records/19701580
     authors:
       - family-names: Smith
         given-names: Donald Paul
+        orcid: "https://orcid.org/0009-0003-7925-1653"
+  - type: dataset
+    title: Zenodo Research Record 2
+    url: https://zenodo.org/records/19478891
+    authors:
+      - family-names: Smith
+        given-names: Donald Paul
+        orcid: "https://orcid.org/0009-0003-7925-1653"
+  - type: dataset
+    title: Zenodo Research Record 3
+    url: https://zenodo.org/records/18448356
+    authors:
+      - family-names: Smith
+        given-names: Donald Paul
+        orcid: "https://orcid.org/0009-0003-7925-1653"
+
+preferred-citation:
+  type: dataset
+  title: Cosmic Rotation Pipeline
+  authors:
+    - family-names: Smith
+      given-names: Donald Paul
+      orcid: "https://orcid.org/0009-0003-7925-1653"
+  doi: "10.5281/zenodo.15399806"
+  year: 2025
+  url: "https://github.com/FatherTimeSDKP/Cosmic-rotation-pipeline"
